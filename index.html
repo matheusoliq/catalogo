@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Catálogo de Modelos</title>
+
+  <!--
+    =========================================================
+    COMO EDITAR O TÍTULO DA ABA DO NAVEGADOR
+    =========================================================
+    Altere o texto dentro da tag <title> acima.
+  -->
+
+  <meta name="description" content="Catálogo de modelos prontos para você escolher o ideal para o seu projeto." />
+
+  <!-- =========================================================
+       CONFIGURAÇÃO DE PWA (permite "Adicionar à tela inicial")
+       =========================================================
+       - "manifest.json" define o nome, ícone e cor do app quando
+         instalado no celular (funciona no Android/Chrome).
+       - As tags "apple-*" fazem o mesmo funcionar bem no iPhone.
+       - O ícone usado vem da pasta /icons (troque pelos seus).
+
+       >>> IMPORTANTE: para o "Adicionar à tela inicial" funcionar,
+       >>> o site precisa estar publicado em um endereço HTTPS
+       >>> (ou aberto em "localhost"). Abrindo o arquivo direto do
+       >>> computador (file://) o navegador não libera essa opção.
+  -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1C2B39" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <!-- ===== ALTERAR NOME DO APP NO IPHONE ===== -->
+  <meta name="apple-mobile-web-app-title" content="Sua Marca" />
+
+  <!-- Fontes do Google Fonts: "Sora" para títulos e "Inter" para textos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Arquivo de estilos (todas as cores, espaçamentos e animações CSS estão aqui) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       CABEÇALHO (topo fixo simples, apenas logo/nome + botão)
+       ========================================================= -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <!-- ===== ALTERAR NOME/LOGO DA MARCA =====
+           Substitua o texto "Sua Marca" abaixo pelo nome do seu negócio. -->
+      <a href="#hero" class="logo">Sua Marca</a>
+
+      <!-- Botão do cabeçalho leva direto ao catálogo -->
+      <a href="#catalogo" class="btn btn--ghost btn--small">Ver modelos</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =========================================================
+         1. SEÇÃO HERO (topo da página)
+         =========================================================
+         ONDE EDITAR OS TEXTOS:
+         - Título principal: dentro de <h1 class="hero__title">
+         - Subtítulo: dentro de <p class="hero__subtitle">
+         - Frase de credibilidade: dentro de <p class="hero__credibility">
+         ONDE TROCAR A IMAGEM:
+         - Troque o "src" da tag <img class="hero__image"> mais abaixo.
+    -->
+    <section class="hero" id="hero">
+      <div class="container hero__grid">
+
+        <div class="hero__content" data-animate>
+          <!-- Pequena etiqueta/eyebrow acima do título -->
+          <span class="eyebrow">Catálogo oficial</span>
+
+          <!-- TÍTULO PRINCIPAL — sugestão: 6 a 10 palavras de impacto -->
+          <h1 class="hero__title">
+            [ Espaço para título principal de impacto — aprox. 6 a 10 palavras ]
+          </h1>
+
+          <!-- SUBTÍTULO — sugestão: 10 a 18 palavras, curto e direto -->
+          <p class="hero__subtitle">
+            [ Espaço para subtítulo curto explicando a proposta — aprox. 10 a 18 palavras ]
+          </p>
+
+          <!-- BOTÃO PRINCIPAL: rola a página até a seção do catálogo (#catalogo) -->
+          <a href="#catalogo" class="btn btn--primary btn--large">Ver os modelos</a>
+
+          <!-- FRASE DE CREDIBILIDADE — sugestão: 6 a 12 palavras -->
+          <p class="hero__credibility">
+            [ Espaço para frase curta de credibilidade — aprox. 6 a 12 palavras ]
+          </p>
+        </div>
+
+        <div class="hero__media" data-animate data-delay="150">
+          <!-- ===== TROCAR IMAGEM DO HERO =====
+               Substitua o link do "src" por uma imagem grande e atrativa sua. -->
+          <img
+            class="hero__image"
+            src="https://placehold.co/900x1000/EDEDED/1C2B39?text=Imagem+de+destaque"
+            alt="Imagem de destaque do catálogo"
+            loading="eager"
+          />
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         2. SEÇÃO CATÁLOGO DE PRODUTOS/MODELOS (CARROSSEL)
+         =========================================================
+         IMPORTANTE:
+         Os cards NÃO são escritos aqui manualmente no HTML.
+         Eles são gerados automaticamente pelo arquivo script.js,
+         a partir da lista de modelos ("const models").
+
+         >>> PARA ADICIONAR, EDITAR OU REMOVER MODELOS,
+         >>> VÁ NO ARQUIVO script.js E PROCURE POR:
+         >>> "ADICIONAR NOVO MODELO"
+
+         COMO FUNCIONA O CARROSSEL:
+         - No celular: os cards rolam na horizontal como um carrossel,
+           com o card do centro em destaque e os vizinhos "espiando"
+           menores dos lados (efeito de profundidade), sem nenhum
+           desfoque/blur — apenas escala e opacidade.
+         - No computador/tablet (telas largas): todos os cards aparecem
+           no tamanho normal, em uma faixa que rola para o lado, sem
+           nenhum efeito de escala/opacidade — dá pra ver todos com
+           nitidez total.
+         - As setas (‹ ›) e as bolinhas abaixo do carrossel navegam
+           entre os modelos. No celular também dá pra arrastar com o dedo.
+    -->
+    <section class="catalog" id="catalogo">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <span class="eyebrow">Modelos disponíveis</span>
+          <!-- TÍTULO DA SEÇÃO DO CATÁLOGO -->
+          <h2 class="section-title">[ Título da seção — ex: "Nossos modelos" ]</h2>
+          <p class="section-subtitle">
+            [ Espaço para uma frase curta explicando o catálogo — aprox. 10 a 16 palavras ]
+          </p>
+        </div>
+      </div>
+
+      <!-- Envoltório do carrossel: fica FORA do ".container" de propósito,
+           para que os cards possam ocupar a largura toda da tela no celular
+           e o efeito de "espiar" nas bordas funcione corretamente. -->
+      <div class="catalog-carousel-wrapper">
+        <!-- Seta para o modelo anterior -->
+        <button type="button" class="carousel-arrow carousel-arrow--prev" id="carouselPrev" aria-label="Ver modelo anterior">
+          <span aria-hidden="true">‹</span>
+        </button>
+
+        <!-- Trilho do carrossel: preenchido dinamicamente pelo script.js -->
+        <div class="catalog-grid" id="catalogGrid">
+          <!-- Os cards de modelo (imagem + nome + descrição + botões) entram aqui via JavaScript -->
+        </div>
+
+        <!-- Seta para o próximo modelo -->
+        <button type="button" class="carousel-arrow carousel-arrow--next" id="carouselNext" aria-label="Ver próximo modelo">
+          <span aria-hidden="true">›</span>
+        </button>
+      </div>
+
+      <!-- Bolinhas indicadoras (aparecem só no formato de carrossel do celular) -->
+      <div class="carousel-dots" id="carouselDots"></div>
+    </section>
+
+
+    <!-- =========================================================
+         3. SEÇÃO: POR QUE ESCOLHER? (resposta a objeção principal)
+         =========================================================
+         ONDE EDITAR:
+         - Título: dentro de <h2 class="section-title">
+         - Resposta/solução: dentro da div ".objection-answer"
+         - Imagem: troque o "src" da tag <img> desta seção
+    -->
+    <section class="split-section" id="por-que" data-animate>
+      <div class="container split-section__grid">
+
+        <div class="split-section__text">
+          <span class="eyebrow">Por que escolher</span>
+
+          <!-- TÍTULO — sugestão: 4 a 8 palavras -->
+          <h2 class="section-title">
+            [ Título — aprox. 4 a 8 palavras ]
+          </h2>
+
+          <!-- ===== EDITAR RESPOSTA DA OBJEÇÃO =====
+               Substitua o texto abaixo dentro da div ".objection-answer"
+               pela resposta real que resolve a principal dúvida do visitante.
+               Sugestão: 35 a 60 palavras. -->
+          <div class="objection-answer">
+            [ Espaço para o texto de resposta/solução — aprox. 35 a 60 palavras.
+            Explique aqui por que os modelos resolvem o problema do visitante
+            e por que ele pode confiar na qualidade apresentada. ]
+          </div>
+        </div>
+
+        <!-- Espaço para imagem opcional desta seção -->
+        <div class="split-section__media">
+          <img
+            class="section-image"
+            src="https://placehold.co/800x900/EDEDED/1C2B39?text=Imagem+opcional"
+            alt="Imagem ilustrativa da seção"
+            loading="lazy"
+          />
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SEÇÃO: O QUE VOCÊ RECEBE? (lista de benefícios)
+         =========================================================
+         ONDE EDITAR:
+         - Título: dentro de <h2 class="section-title">
+         - Cada benefício: dentro de cada <li class="benefit-item">
+         - Para adicionar mais itens, copie um <li> inteiro e cole abaixo.
+    -->
+    <section class="benefits-section" id="o-que-recebe" data-animate>
+      <div class="container">
+
+        <div class="section-header" data-animate>
+          <span class="eyebrow">O que você recebe</span>
+          <!-- TÍTULO — sugestão: 3 a 6 palavras -->
+          <h2 class="section-title">[ Título — aprox. 3 a 6 palavras ]</h2>
+        </div>
+
+        <!-- Lista de benefícios: entre 3 e 5 itens. Cada item até 12 palavras. -->
+        <ul class="benefits-list">
+          <li class="benefit-item" data-animate>
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">[ Benefício 1 — até 12 palavras ]</span>
+          </li>
+          <li class="benefit-item" data-animate data-delay="80">
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">[ Benefício 2 — até 12 palavras ]</span>
+          </li>
+          <li class="benefit-item" data-animate data-delay="160">
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">[ Benefício 3 — até 12 palavras ]</span>
+          </li>
+          <li class="benefit-item" data-animate data-delay="240">
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">[ Benefício 4 — até 12 palavras ]</span>
+          </li>
+          <li class="benefit-item" data-animate data-delay="320">
+            <span class="benefit-icon">✓</span>
+            <span class="benefit-text">[ Benefício 5 — até 12 palavras ]</span>
+          </li>
+          <!-- ===== ADICIONAR NOVO BENEFÍCIO =====
+               Copie um <li class="benefit-item"> inteiro (do <li> ao </li>)
+               e cole aqui em baixo. Depois altere apenas o texto. -->
+        </ul>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SEÇÃO: COMO FUNCIONA? (3 passos numerados)
+         =========================================================
+         ONDE EDITAR:
+         - Título: dentro de <h2 class="section-title">
+         - Cada passo: dentro de cada <div class="step">
+         Numeração é usada aqui porque representa uma ordem real de etapas.
+    -->
+    <section class="steps-section" id="como-funciona" data-animate>
+      <div class="container">
+
+        <div class="section-header" data-animate>
+          <span class="eyebrow">Processo simples</span>
+          <!-- TÍTULO — sugestão: 2 a 5 palavras -->
+          <h2 class="section-title">[ Título — aprox. 2 a 5 palavras ]</h2>
+        </div>
+
+        <div class="steps-grid">
+
+          <div class="step" data-animate>
+            <span class="step__number">01</span>
+            <!-- Texto do passo — sugestão: 12 a 20 palavras -->
+            <p class="step__text">[ Passo 1 — descreva a primeira etapa em aprox. 12 a 20 palavras ]</p>
+          </div>
+
+          <div class="step" data-animate data-delay="120">
+            <span class="step__number">02</span>
+            <p class="step__text">[ Passo 2 — descreva a segunda etapa em aprox. 12 a 20 palavras ]</p>
+          </div>
+
+          <div class="step" data-animate data-delay="240">
+            <span class="step__number">03</span>
+            <p class="step__text">[ Passo 3 — descreva a terceira etapa em aprox. 12 a 20 palavras ]</p>
+          </div>
+
+          <!-- ===== ADICIONAR NOVO PASSO =====
+               Copie um <div class="step"> inteiro e cole aqui.
+               Ajuste o número (03 → 04) e o texto. -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SEÇÃO: RESULTADO ESPERADO
+         =========================================================
+         ONDE EDITAR:
+         - Título: dentro de <h2 class="section-title">
+         - Texto principal: dentro de <p class="result-text">
+         - Imagem/mockup: troque o "src" da imagem abaixo
+    -->
+    <section class="result-section" id="resultado" data-animate>
+      <div class="container result-section__grid">
+
+        <div class="result-section__text">
+          <span class="eyebrow">Resultado esperado</span>
+          <!-- TÍTULO — sugestão: 3 a 6 palavras -->
+          <h2 class="section-title">[ Título — aprox. 3 a 6 palavras ]</h2>
+
+          <!-- TEXTO PRINCIPAL — sugestão: 30 a 50 palavras -->
+          <p class="result-text">
+            [ Espaço para o texto principal descrevendo o resultado que o
+            visitante pode esperar ao usar um dos modelos — aprox. 30 a 50 palavras. ]
+          </p>
+        </div>
+
+        <div class="result-section__media">
+          <!-- ===== TROCAR IMAGEM/MOCKUP DO RESULTADO ===== -->
+          <img
+            class="section-image"
+            src="https://placehold.co/900x700/EDEDED/1C2B39?text=Imagem+ou+mockup"
+            alt="Mockup do resultado esperado"
+            loading="lazy"
+          />
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SEÇÃO: CHAMADA FINAL (última seção antes do rodapé)
+         =========================================================
+         ONDE EDITAR:
+         - Título: dentro de <h2 class="section-title">
+         - Texto curto: dentro de <p class="final-cta__text">
+         - Botão: altere o texto e o "href" do link abaixo
+    -->
+    <section class="final-cta" id="cta-final" data-animate>
+      <div class="container final-cta__inner">
+
+        <!-- TÍTULO — sugestão: 4 a 8 palavras -->
+        <h2 class="section-title">[ Título da chamada final — aprox. 4 a 8 palavras ]</h2>
+
+        <!-- TEXTO CURTO — sugestão: 15 a 30 palavras -->
+        <p class="final-cta__text">
+          [ Espaço para um texto curto reforçando o convite para ver os modelos — aprox. 15 a 30 palavras. ]
+        </p>
+
+        <!-- Botão final: leva de volta ao catálogo. Troque o "href" se quiser
+             apontar para outro lugar (ex: um link externo específico). -->
+        <a href="#catalogo" class="btn btn--primary btn--large">[ Texto do botão de ação ]</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       RODAPÉ
+       ========================================================= -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <!-- ===== ALTERAR TEXTO DO RODAPÉ ===== -->
+      <p>© 2026 Sua Marca. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       BOTÃO FLUTUANTE DO WHATSAPP
+       =========================================================
+       Fica fixo no canto da tela em todas as seções da página.
+       O link (href="#") é preenchido automaticamente pelo script.js
+       assim que a página carrega, usando o número e a mensagem
+       configurados no topo do arquivo script.js ("WHATSAPP_CONFIG").
+
+       >>> ONDE TROCAR O NÚMERO/MENSAGEM: veja script.js -> "WHATSAPP_CONFIG"
+  -->
+  <a
+    id="whatsappFloat"
+    class="whatsapp-float"
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Falar no WhatsApp"
+  >
+    <span class="whatsapp-float__pulse" aria-hidden="true"></span>
+    <svg class="whatsapp-float__icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3C7.03 3 3 6.58 3 11c0 2.08.87 3.97 2.3 5.4L4 21l4.8-1.24A9.9 9.9 0 0 0 12 19c4.97 0 9-3.58 9-8s-4.03-8-9-8Z" fill="#FFFFFF"/>
+    </svg>
+    <span class="whatsapp-float__label">Fale conosco</span>
+  </a>
+
+  <!-- Arquivo JavaScript: lista de modelos, carrossel, animações e WhatsApp -->
+  <script src="script.js"></script>
+</body>
+</html>

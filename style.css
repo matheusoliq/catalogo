@@ -1,0 +1,892 @@
+/* =============================================================
+   ARQUIVO DE ESTILOS — style.css
+   =============================================================
+   Este arquivo controla TODO o visual da página:
+   cores, espaçamentos, tipografia, layout, carrossel e animações.
+
+   ÍNDICE RÁPIDO (use Ctrl+F para encontrar cada bloco):
+   1. VARIÁVEIS DE COR E ESPAÇAMENTO  -> ":root"
+   2. BASE / RESET GERAL
+   3. TIPOGRAFIA (títulos e textos)
+   4. BOTÕES
+   5. CABEÇALHO
+   6. SEÇÃO HERO
+   7. CATÁLOGO / CARROSSEL DE MODELOS
+   8. SEÇÕES DE OBJEÇÃO / TEXTO + IMAGEM
+   9. BENEFÍCIOS
+   10. COMO FUNCIONA (passos)
+   11. RESULTADO ESPERADO
+   12. CHAMADA FINAL
+   13. RODAPÉ
+   14. BOTÃO FLUTUANTE DO WHATSAPP
+   15. ANIMAÇÕES DE ROLAGEM (scroll reveal)
+   16. RESPONSIVIDADE (celular / tablet)
+   ============================================================= */
+
+
+/* =============================================================
+   1. VARIÁVEIS DE COR E ESPAÇAMENTO
+   =============================================================
+   >>> PARA MUDAR AS CORES DE TODA A PÁGINA, EDITE SOMENTE AQUI <<<
+   ============================================================= */
+:root {
+  /* ----- Cores principais (poucas cores, uso consistente) ----- */
+  --primary: #1C2B39;        /* Azul-marinho profundo: títulos, botões, textos fortes */
+  --primary-dark: #121D27;   /* Tom mais escuro do primary, usado no hover dos botões */
+  --accent: #B8935F;         /* Dourado suave: detalhes premium (eyebrows, ícones, linhas) */
+
+  /* ----- Cor do WhatsApp (usada só nos botões de WhatsApp) ----- */
+  --whatsapp-green: #25D366;
+  --whatsapp-green-dark: #1DA851;
+
+  /* ----- Neutros / fundo ----- */
+  --bg: #F7F7F5;             /* Fundo principal da página (claro, levemente quente) */
+  --bg-alt: #FFFFFF;         /* Fundo dos cards e blocos de destaque */
+  --bg-soft: #EFEEEB;        /* Fundo levemente mais escuro para alternar seções */
+
+  /* ----- Textos ----- */
+  --text-strong: #1C2B39;    /* Texto principal (títulos) */
+  --text-body: #4A5259;      /* Texto de parágrafos */
+  --text-muted: #8A9098;     /* Texto secundário / legendas */
+
+  /* ----- Bordas e sombras (discretas, sem brilho/neon) ----- */
+  --border-color: #E4E2DD;
+  --shadow-soft: 0 8px 30px rgba(28, 43, 57, 0.06);
+  --shadow-hover: 0 16px 40px rgba(28, 43, 57, 0.12);
+
+  /* ----- Tipografia ----- */
+  --font-display: 'Sora', sans-serif;   /* Fonte dos títulos */
+  --font-body: 'Inter', sans-serif;     /* Fonte dos textos */
+
+  /* ----- Espaçamento entre seções (muito espaço = visual premium) ----- */
+  --section-padding: clamp(72px, 10vw, 140px);
+  --container-width: 1180px;
+
+  /* ----- Cantos arredondados (usados nos cards e imagens) ----- */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* -----------------------------------------------------------
+     ONDE AJUSTAR A VELOCIDADE DAS ANIMAÇÕES DE ROLAGEM
+     Duração recomendada: entre 500ms e 700ms (pedido do briefing)
+     ----------------------------------------------------------- */
+  --animation-duration: 600ms;
+  --animation-easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* =============================================================
+   2. BASE / RESET GERAL
+   ============================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* rolagem suave ao clicar em links internos (#) */
+}
+
+body {
+  background: linear-gradient(180deg, #FBFAF8 0%, #F5F4F1 45%, #F0EFEB 100%);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* evita barra de rolagem horizontal indesejada no corpo da página */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Container central usado em quase todas as seções */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Respeita usuários que preferem menos movimento na tela */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* =============================================================
+   3. TIPOGRAFIA
+   =============================================================
+   ONDE EDITAR OS TAMANHOS DOS TÍTULOS: ajuste os valores de "clamp()"
+   abaixo (mínimo, ideal, máximo) para deixar maior ou menor.
+   ============================================================= */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.hero__title,
+.section-title {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero__title {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.12;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: clamp(26px, 3.6vw, 40px);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero__subtitle,
+.section-subtitle {
+  font-size: clamp(16px, 1.6vw, 19px);
+  color: var(--text-body);
+  max-width: 540px;
+}
+
+.hero__credibility {
+  margin-top: 28px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.section-header {
+  max-width: 640px;
+  margin: 0 auto 48px auto;
+  text-align: center;
+}
+
+.section-header .section-subtitle {
+  margin: 0 auto;
+}
+
+
+/* =============================================================
+   4. BOTÕES
+   =============================================================
+   ONDE TROCAR O ESTILO DOS BOTÕES: edite as classes abaixo.
+   ============================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.25s var(--animation-easing),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn--ghost {
+  background-color: transparent;
+  color: var(--primary);
+  border-color: var(--border-color);
+}
+
+.btn--ghost:hover {
+  border-color: var(--primary);
+}
+
+.btn--large {
+  padding: 16px 34px;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.btn--small {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+
+/* =============================================================
+   5. CABEÇALHO
+   ============================================================= */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(247, 247, 245, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-strong);
+}
+
+
+/* =============================================================
+   6. SEÇÃO HERO
+   ============================================================= */
+.hero {
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: var(--section-padding);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.hero__image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+
+/* =============================================================
+   7. CATÁLOGO / CARROSSEL DE MODELOS
+   =============================================================
+   Os cards em si (HTML) são criados pelo script.js.
+   Aqui definimos a aparência deles e o comportamento de carrossel.
+
+   COMO O CARROSSEL FUNCIONA:
+   - ".catalog-grid" é uma faixa horizontal que rola (overflow-x).
+   - "scroll-snap" faz cada card "encaixar" no lugar certo ao soltar
+     o dedo (celular) ou ao usar as setas/roda do mouse (computador).
+   - No celular, o script.js calcula a distância de cada card até o
+     centro da tela e aplica escala/opacidade (efeito de profundidade).
+   - No computador (a partir de 768px), o script.js NÃO aplica esse
+     efeito — todos os cards ficam 100% nítidos e do mesmo tamanho.
+   ============================================================= */
+.catalog {
+  padding: var(--section-padding) 0;
+}
+
+/* Envoltório do carrossel (posiciona as setas) */
+.catalog-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Trilho horizontal que rola */
+.catalog-grid {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* rolagem mais suave em iPhone */
+  scrollbar-width: none;             /* Firefox: esconde a barra de rolagem */
+  padding: 44px 8vw 56px 8vw;        /* respiro nas laterais para o efeito de "espiar" */
+}
+
+/* Esconde a barra de rolagem no Chrome/Safari (a navegação é feita
+   pelas setas, pelas bolinhas ou arrastando com o dedo/mouse) */
+.catalog-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card individual dentro do carrossel */
+.model-card {
+  flex: 0 0 auto;                 /* não encolhe, mantém a largura definida abaixo */
+  width: 78vw;                    /* celular: card ocupa a maior parte da tela */
+  max-width: 320px;
+  scroll-snap-align: center;      /* no celular, o card "trava" no centro da tela */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  /* Transição suave para quando o script.js altera escala/opacidade/posição */
+  transition: transform 0.45s var(--animation-easing),
+              opacity 0.45s var(--animation-easing),
+              box-shadow 0.35s ease;
+}
+
+/* Link que envolve a imagem + nome + descrição (leva ao link do modelo) */
+.model-card__link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+}
+
+.model-card__image-wrap {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.model-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--animation-easing);
+}
+
+/* Leve zoom na imagem ao passar o mouse (efeito premium, sem exagero) */
+.model-card:hover .model-card__image {
+  transform: scale(1.05);
+}
+
+.model-card__body {
+  padding: 22px 22px 8px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.model-card__name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 8px;
+}
+
+.model-card__description {
+  font-size: 14.5px;
+  color: var(--text-body);
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.model-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.model-card__cta .arrow {
+  transition: transform 0.25s ease;
+}
+
+.model-card:hover .model-card__cta .arrow {
+  transform: translateX(4px);
+}
+
+/* ---- Botão de WhatsApp de cada card (fica abaixo da descrição) ----
+   >>> PARA MUDAR A COR/TEXTO DESTE BOTÃO, EDITE AQUI E NO script.js <<< */
+.model-card__whatsapp {
+  margin: 4px 22px 22px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background-color: var(--whatsapp-green);
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.model-card__whatsapp:hover {
+  background-color: var(--whatsapp-green-dark);
+  transform: translateY(-2px);
+}
+
+.model-card__whatsapp svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ---- Setas de navegação do carrossel (‹ ›) ---- */
+.carousel-arrow {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-strong);
+  cursor: pointer;
+  z-index: 30;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background-color: var(--bg-soft);
+  box-shadow: var(--shadow-hover);
+}
+
+.carousel-arrow--prev {
+  left: 10px;
+}
+
+.carousel-arrow--next {
+  right: 10px;
+}
+
+/* ---- Bolinhas indicadoras do carrossel ---- */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--border-color);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.carousel-dot.is-active {
+  background-color: var(--primary);
+  transform: scale(1.3);
+}
+
+
+/* =============================================================
+   8. SEÇÕES DE OBJEÇÃO / TEXTO + IMAGEM (layout dividido)
+   ============================================================= */
+.split-section {
+  padding: var(--section-padding) 0;
+}
+
+.split-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.objection-answer {
+  font-size: 16.5px;
+  color: var(--text-body);
+  margin-top: 4px;
+}
+
+.section-image {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+}
+
+
+/* =============================================================
+   9. BENEFÍCIOS ("O que você recebe")
+   ============================================================= */
+.benefits-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--bg-soft);
+}
+
+.benefits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background-color: var(--bg-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+}
+
+.benefit-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-text {
+  font-size: 15px;
+  color: var(--text-strong);
+  font-weight: 500;
+}
+
+
+/* =============================================================
+   10. COMO FUNCIONA (passos numerados)
+   ============================================================= */
+.steps-section {
+  padding: var(--section-padding) 0;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+}
+
+.step {
+  padding: 8px;
+}
+
+.step__number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.step__text {
+  font-size: 16px;
+  color: var(--text-body);
+  max-width: 320px;
+}
+
+
+/* =============================================================
+   11. RESULTADO ESPERADO
+   ============================================================= */
+.result-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--bg-soft);
+}
+
+.result-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.result-text {
+  font-size: 16.5px;
+  color: var(--text-body);
+}
+
+
+/* =============================================================
+   12. CHAMADA FINAL
+   ============================================================= */
+.final-cta {
+  padding: var(--section-padding) 0;
+}
+
+.final-cta__inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.final-cta__text {
+  font-size: 16.5px;
+  color: var(--text-body);
+  margin-bottom: 8px;
+}
+
+
+/* =============================================================
+   13. RODAPÉ
+   ============================================================= */
+.footer {
+  border-top: 1px solid var(--border-color);
+  padding: 32px 0;
+}
+
+.footer__inner {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+
+/* =============================================================
+   14. BOTÃO FLUTUANTE DO WHATSAPP
+   =============================================================
+   Fica fixo no canto inferior direito da tela, em todas as seções.
+   O "href" é preenchido pelo script.js (veja "WHATSAPP_CONFIG").
+
+   >>> PARA MUDAR A POSIÇÃO: ajuste "bottom"/"right" abaixo.
+   >>> PARA MUDAR O TAMANHO: ajuste "width"/"height" abaixo.
+   >>> PARA MUDAR A COR: ajuste "--whatsapp-green" no topo do arquivo.
+   ============================================================= */
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--whatsapp-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.4), var(--shadow-soft);
+  z-index: 200;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 14px 34px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float__icon {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Anel de pulso suave (chama atenção sem ser piscante/neon) */
+.whatsapp-float__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--whatsapp-green);
+  animation: whatsapp-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Etiqueta "Fale conosco" que aparece ao passar o mouse (só em telas maiores) */
+.whatsapp-float__label {
+  position: absolute;
+  right: 72px;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.whatsapp-float:hover .whatsapp-float__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* =============================================================
+   15. ANIMAÇÕES DE ROLAGEM (scroll reveal)
+   =============================================================
+   Todo elemento com o atributo "data-animate" no HTML (títulos,
+   blocos de texto, imagens de seção, etc.) começa invisível e
+   levemente deslocado para baixo. O script.js detecta quando o
+   elemento entra na tela (Intersection Observer) e adiciona a
+   classe ".is-visible", que dispara a transição abaixo.
+
+   >>> PARA AJUSTAR A ANIMAÇÃO (velocidade/distância), EDITE AQUI <<<
+   ============================================================= */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--animation-duration) var(--animation-easing),
+              transform var(--animation-duration) var(--animation-easing);
+  will-change: opacity, transform;
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Efeito de entrada específico para os cards do catálogo: cada card
+   recebe um pequeno atraso (aplicado via JS, veja script.js) para
+   que apareçam em sequência, um pouco depois do outro. Depois de
+   visível, o script.js pode ajustar a escala (efeito de carrossel
+   no celular) por cima deste mesmo "transform". */
+.model-card {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.model-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* =============================================================
+   16. RESPONSIVIDADE (tablet e celular)
+   ============================================================= */
+
+/* ---- A partir de tablets pequenos: cards um pouco menores/mais estreitos ---- */
+@media (min-width: 480px) and (max-width: 767px) {
+  .model-card {
+    width: 64vw;
+    max-width: 340px;
+  }
+}
+
+/* ---- A partir daqui (768px+) consideramos "computador/tablet grande":
+        o carrossel vira uma faixa com todos os cards no mesmo tamanho,
+        sem efeito de escala/opacidade (isso também é reforçado via JS). ---- */
+@media (min-width: 768px) {
+  .model-card {
+    width: 300px;
+    max-width: none;
+    scroll-snap-align: start; /* faixa tipo "vitrine", encaixa no início de cada card */
+  }
+
+  .catalog-grid {
+    /* Alinha a faixa do carrossel com a mesma largura do restante do conteúdo */
+    padding-left: max(24px, calc((100vw - var(--container-width)) / 2 + 24px));
+    padding-right: max(24px, calc((100vw - var(--container-width)) / 2 + 24px));
+  }
+
+  .carousel-dots {
+    display: none; /* em telas grandes todos os modelos já aparecem, pontos não são necessários */
+  }
+}
+
+@media (max-width: 900px) {
+  .hero__grid,
+  .split-section__grid,
+  .result-section__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__content {
+    order: 1;
+  }
+
+  .hero__media {
+    order: 2;
+  }
+
+  .split-section__media {
+    order: -1; /* imagem aparece acima do texto em telas menores */
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --section-padding: 64px;
+  }
+
+  .header__inner {
+    flex-direction: row;
+  }
+
+  .btn--large {
+    width: 100%;
+  }
+
+  .hero__credibility {
+    margin-bottom: 8px;
+  }
+
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .whatsapp-float {
+    width: 54px;
+    height: 54px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .whatsapp-float__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* No celular escondemos a etiqueta de texto para não atrapalhar a tela pequena */
+  .whatsapp-float__label {
+    display: none;
+  }
+}
